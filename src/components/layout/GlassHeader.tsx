@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { useViewport } from '../../hooks/useViewport';
 
 interface GlassHeaderProps {
   revealThreshold: number; // Raw progress (0 to 1) when the nav should drop down
@@ -6,6 +8,8 @@ interface GlassHeaderProps {
 
 export const GlassHeader: React.FC<GlassHeaderProps> = ({ revealThreshold }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { isMobile } = useViewport();
 
   useEffect(() => {
     let animationId: number;
@@ -40,7 +44,7 @@ export const GlassHeader: React.FC<GlassHeaderProps> = ({ revealThreshold }) => 
       top: 0,
       left: 0,
       width: '100vw',
-      padding: '1.5rem 4rem',
+      padding: isMobile ? '1rem 1.5rem' : '1.5rem 4rem',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -65,47 +69,116 @@ export const GlassHeader: React.FC<GlassHeaderProps> = ({ revealThreshold }) => 
         APEX
       </div>
 
-      <nav style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
-        {['Formulations', 'Science', 'Reviews'].map(item => (
-          <a key={item} href={`#${item.toLowerCase()}`} className="nav-link interactive" style={{
-            color: 'var(--warm-white-dim)',
-            textDecoration: 'none',
-            fontSize: '0.75rem',
-            fontWeight: 600,
-            textTransform: 'uppercase',
-            letterSpacing: '0.2em',
-            transition: 'color 0.3s ease'
-          }} onMouseOver={e => e.currentTarget.style.color = 'var(--accent-gold)'}
-             onMouseOut={e => e.currentTarget.style.color = 'var(--warm-white-dim)'}>
-            {item}
-          </a>
-        ))}
-        {/* CTA Button */}
-        <a href="#acquire" className="interactive" style={{
-          padding: '0.8rem 2rem',
-          background: 'transparent',
-          color: 'var(--accent-gold)',
-          border: '1px solid var(--accent-gold)',
-          fontSize: '0.7rem',
-          fontWeight: 700,
-          letterSpacing: '0.25em',
-          textTransform: 'uppercase',
-          textDecoration: 'none',
-          transition: 'all 0.3s ease',
-          boxShadow: 'inset 0 0 0 rgba(212, 175, 55, 0)',
-        }} onMouseOver={e => {
-            e.currentTarget.style.background = 'var(--accent-gold)';
-            e.currentTarget.style.color = 'var(--ink)';
-            e.currentTarget.style.boxShadow = '0 0 20px rgba(212,175,55,0.4)';
-          }}
-           onMouseOut={e => {
-            e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.color = 'var(--accent-gold)';
-            e.currentTarget.style.boxShadow = 'inset 0 0 0 rgba(212,175,55,0)';
-           }}>
-          Acquire
-        </a>
+      <nav style={{ display: 'flex', gap: isMobile ? '0' : '3rem', alignItems: 'center' }}>
+        {isMobile ? (
+          <button 
+            onClick={() => setMenuOpen(!menuOpen)} 
+            style={{ background: 'transparent', border: 'none', color: 'var(--warm-white)', cursor: 'pointer', zIndex: 1001 }}
+          >
+            {menuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        ) : (
+          <>
+            {['Formulations', 'Science', 'Reviews'].map(item => (
+              <a key={item} href={`#${item.toLowerCase()}`} className="nav-link interactive" style={{
+                color: 'var(--warm-white-dim)',
+                textDecoration: 'none',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.2em',
+                transition: 'color 0.3s ease'
+              }} onMouseOver={e => e.currentTarget.style.color = 'var(--accent-gold)'}
+                 onMouseOut={e => e.currentTarget.style.color = 'var(--warm-white-dim)'}>
+                {item}
+              </a>
+            ))}
+            {/* CTA Button */}
+            <a href="#acquire" className="interactive" style={{
+              padding: '0.8rem 2rem',
+              background: 'transparent',
+              color: 'var(--accent-gold)',
+              border: '1px solid var(--accent-gold)',
+              fontSize: '0.7rem',
+              fontWeight: 700,
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              transition: 'all 0.3s ease',
+              boxShadow: 'inset 0 0 0 rgba(212, 175, 55, 0)',
+            }} onMouseOver={e => {
+                e.currentTarget.style.background = 'var(--accent-gold)';
+                e.currentTarget.style.color = 'var(--ink)';
+                e.currentTarget.style.boxShadow = '0 0 20px rgba(212,175,55,0.4)';
+              }}
+               onMouseOut={e => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.color = 'var(--accent-gold)';
+                e.currentTarget.style.boxShadow = 'inset 0 0 0 rgba(212,175,55,0)';
+               }}>
+              Acquire
+            </a>
+          </>
+        )}
       </nav>
+
+      {/* MOBILE FULLSCREEN MENU OVERLAY */}
+      {isMobile && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(5,5,5,0.95)',
+          backdropFilter: 'blur(30px)',
+          WebkitBackdropFilter: 'blur(30px)',
+          zIndex: 1000,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '3rem',
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? 'auto' : 'none',
+          transform: menuOpen ? 'translateY(0)' : 'translateY(-20px)',
+          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+        }}>
+          {['Formulations', 'Science', 'Reviews'].map((item, i) => (
+            <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)} style={{
+              color: 'var(--warm-white)',
+              textDecoration: 'none',
+              fontSize: '1.5rem',
+              fontFamily: 'var(--heading)',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.2em',
+              opacity: menuOpen ? 1 : 0,
+              transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
+              transition: `all 0.4s cubic-bezier(0.16, 1, 0.3, 1) ${0.1 + (i * 0.1)}s`
+            }}>
+              {item}
+            </a>
+          ))}
+          <a href="#acquire" onClick={() => setMenuOpen(false)} style={{
+            marginTop: '2rem',
+            padding: '1.2rem 4rem',
+            background: 'var(--accent-gold)',
+            color: 'var(--ink)',
+            fontSize: '1rem',
+            fontFamily: 'var(--heading)',
+            fontWeight: 700,
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            opacity: menuOpen ? 1 : 0,
+            transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',
+            transition: `all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s`
+          }}>
+            ACQUIRE NOW
+          </a>
+        </div>
+      )}
     </header>
   );
 };

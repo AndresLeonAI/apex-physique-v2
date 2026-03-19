@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFrameLoader } from './hooks/useFrameLoader';
+import { useViewport } from './hooks/useViewport';
 import { Loader } from './components/layout/Loader';
 import { FilmGrain, Vignette, ParticlesCanvas } from './components/ambient/CinematicEffects';
 import { CustomCursor } from './components/ambient/CustomCursor';
@@ -17,7 +18,9 @@ import { CTASection } from './components/sections/CTASection';
 const TOTAL_FRAMES = 120; // 0 to 119 => 120 frames
 
 export default function App() {
-  const { frames, progress, isLoaded } = useFrameLoader(TOTAL_FRAMES, '/frames/desktop');
+  const { isMobile } = useViewport();
+  const frameDir = isMobile ? '/frames/mobile' : '/frames/desktop';
+  const { frames, progress, isLoaded } = useFrameLoader(TOTAL_FRAMES, frameDir);
 
   return (
     <>

@@ -224,9 +224,41 @@ body {
 #sec-4 { justify-content: flex-end; align-items: center; padding-bottom: 8vh; text-align: center; }
 
 @media(max-width: 768px) {
-  .hero-title { font-size: 2.5rem !important; }
-  .glass-bar { flex-direction: column; gap: 2rem; text-align: center; padding: 2rem 1rem; }
-  .readability-overlay { background: linear-gradient(0deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.7) 50%, transparent 100%) !important; }
-  .scroll-section { justify-content: flex-end; padding-bottom: 25vh; text-align: center !important; align-items: center !important; }
-  .spec-grid { grid-template-columns: 1fr; }
+  /* Fluid Typography for Mobile Limits */
+  .hero-title { font-size: clamp(2rem, 11vw, 3.5rem) !important; letter-spacing: -0.02em; line-height: 1; }
+  .hero-subtitle { font-size: 0.85rem !important; line-height: 1.4; }
+  .overline { margin-bottom: 0.75rem; font-size: 0.6rem; }
+  
+  /* Curing the Scroll Section Bounds */
+  .scroll-section { 
+    justify-content: flex-end !important; 
+    padding-bottom: 12vh !important; 
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    text-align: center !important; 
+    align-items: center !important; 
+  }
+  
+  /* Overriding specific desktop max-widths */
+  #sec-1 .hero-content { max-width: 95vw !important; overflow: visible !important; }
+  .glass-bar { flex-direction: column; gap: 1.5rem; text-align: center; padding: 1.5rem; width: 90vw; margin: 0 auto; }
+  
+  /* Deepening mobile readability gradients since the jar is huge */
+  .readability-overlay { background: linear-gradient(0deg, rgba(5,5,5,0.98) 0%, rgba(5,5,5,0.85) 30%, rgba(5,5,5,0.4) 60%, transparent 100%) !important; }
+  #sec-2 .readability-overlay { background: linear-gradient(0deg, rgba(5,5,5,0.98) 0%, rgba(5,5,5,0.85) 30%, rgba(5,5,5,0.4) 60%, transparent 100%) !important; }
+  
+  #sec-2 { padding-bottom: 12vh !important; align-items: center !important; text-align: center !important; }
+  
+  /* Grid collapsing */
+  .spec-grid { grid-template-columns: 1fr; gap: 1rem; width: 95vw; margin: 0 auto; }
+  .spec-item { padding: 1.5rem; text-align: center; }
+  
+  #sec-3 { justify-content: flex-end !important; padding-bottom: 12vh !important; }
+  #sec-4 { justify-content: flex-end !important; padding-bottom: 15vh !important; }
+
+  /* Below-The-Fold Global Responsive Surgery */
+  section { padding: 4rem 1.5rem !important; }
+  section h2 { font-size: clamp(1.8rem, 10vw, 3.5rem) !important; line-height: 1.1 !important; word-wrap: break-word; }
+  section h3 { font-size: clamp(1.2rem, 6vw, 2rem) !important; word-wrap: break-word; }
+  section p { font-size: 0.9rem !important; }
 }
