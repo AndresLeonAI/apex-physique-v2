@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* DESIGN SYSTEM: Dark, Cinematic, Luxury, High-Performance */
+:root {
+  --concrete: #d4cfc8;       
+  --concrete-dim: #9e9890;   
+  --stone: #706050;          
+  --charcoal: #121212;       
+  --ink: #050505;            
+  --warm-white: #ffffff;     
+  --warm-white-dim: #e1e1e1; 
+  
+  /* Apex Physique Specific Touches */
+  --accent-gold: #D4AF37;
+  --accent-gold-glow: rgba(212, 175, 55, 0.35);
+  --accent-gold-soft: rgba(212, 175, 55, 0.08);
+  --pure-gold-deep: #B38728;
+  --pure-gold-light: #FCF6BA;
+  
+  --heading: 'Montserrat', sans-serif;
+  --body: 'Montserrat', sans-serif;
+  --display: 'Playfair Display', serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: var(--ink);
+  color: var(--warm-white);
+  font-family: var(--body);
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography specifics */
+.overline { 
+  font-size: 0.65rem; 
+  font-weight: 700; 
+  letter-spacing: 0.35em; 
+  color: var(--accent-gold); 
+  text-transform: uppercase; 
+  margin-bottom: 1.5rem; 
+}
+
+.hero-title {
+  font-family: var(--heading); 
+  font-weight: 900;
+  line-height: 0.95; 
+  letter-spacing: -0.02em; 
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.text-gold-metallic {
+  background: linear-gradient(135deg, var(--pure-gold-light) 0%, var(--accent-gold) 40%, var(--pure-gold-deep) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle { 
+  font-family: var(--heading); 
+  font-weight: 300; 
+  letter-spacing: 0.1em; 
+  color: var(--warm-white-dim); 
+}
+
+/* Glassmorphism Stat Cards */
+.glass-bar {
+  background: rgba(20, 20, 20, 0.35);
+  backdrop-filter: blur(24px); 
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 4px; 
+  transition: all 0.4s ease;
+}
+.glass-bar:hover { 
+  background: rgba(30, 30, 30, 0.45); 
+  border-color: rgba(212, 175, 55, 0.5); 
+}
+
+.stat-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.stat-val { font-family: var(--display); font-size: 2.5rem; font-weight: 600; color: var(--warm-white); }
+.stat-val span { color: var(--accent-gold); font-size: 1.5rem; }
+.stat-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; color: var(--concrete-dim); text-transform: uppercase; }
+
+/* Buttons */
+.btn-gold {
+  display: inline-block; 
+  padding: 1.2rem 4rem; 
+  background: var(--accent-gold); 
+  color: var(--ink);
+  font-family: var(--heading); 
+  font-weight: 700; 
+  font-size: 0.9rem; 
+  letter-spacing: 0.3em; 
+  text-transform: uppercase; 
+  text-decoration: none;
+  border-radius: 2px; 
+  transition: all 0.3s ease; 
+  box-shadow: 0 0 40px rgba(212,175,55,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+  cursor: pointer;
+}
+.btn-gold:hover {
+  box-shadow: 0 0 60px rgba(212,175,55,0.5), 0 0 120px rgba(212,175,55,0.2); 
+  transform: translateY(-2px) scale(1.03);
+}
+
+.btn-outline {
+  display: inline-block; 
+  padding: 1rem 3rem; 
+  background: transparent; 
+  color: var(--warm-white);
+  border: 1px solid rgba(255,255,255,0.2);
+  font-family: var(--heading); 
+  font-weight: 600; 
+  font-size: 0.8rem; 
+  letter-spacing: 0.2em; 
+  text-transform: uppercase; 
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.btn-outline:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+/* Intersection Reveal Utility Classes */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
